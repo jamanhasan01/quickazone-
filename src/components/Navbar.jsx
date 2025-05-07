@@ -1,19 +1,20 @@
 "use client"; // Required for client-side interactivity
 
-import { FiSearch, FiShoppingCart, FiUser } from "react-icons/fi";
+import { FiSearch, FiShoppingCart } from "react-icons/fi";
+import { FaUserTie } from "react-icons/fa6";
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 
 export default function Navbar() {
   const [showCard, setshowCard] = useState(false);
+  const [showProfile, setshowProfile] = useState(false);
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="bg-white shadow-sm sticky top-0 z-50 relative">
+      <div className="w-7xl mx-auto">
         <div className="flex justify-between h-16">
           {/* Left side - Logo */}
-          <div className="flex items-center text-primary">
-            <Link href="/" className="text-2xl font-semibold ">
+          <div className="flex items-center">
+            <Link href="/" className="text-2xl font-semibold text-main ">
               Quickazone
             </Link>
           </div>
@@ -25,7 +26,7 @@ export default function Navbar() {
                 Search
               </label>
               <div className="relative">
-                <button className="absolute inset-y-0 right-0 flex items-center px-3 bg-primary justify-center rounded-r-md">
+                <button className="absolute inset-y-0 right-0 flex items-center px-3 bg-main justify-center rounded-r-md">
                   <FiSearch className="h-5 w-5 text-white" />
                 </button>
                 <input
@@ -39,27 +40,49 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Right side - Shopping cart and avatar */}
-          <div className="flex items-center">
-            <button
-              type="button"
-              onClick={() => setshowCard(!showCard)}
-              className="relative rounded-full  bg-white p-1 text-gray-400 hover:text-gray-500"
-            >
-              <span className="sr-only">View cart</span>
-              <FiShoppingCart className="h-6 w-6" />
-              <span className="absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-primary rounded-full">
-                3 {/* Replace with actual cart count */}
-              </span>
-
-              {/* dropdown card items */}
-              {showCard && (
-                <div className=" absolute bg-white shadow-md p-2  w-2xs right-0 top-14"></div>
-              )}
-            </button>
+          {/* Right side - Shopping cart and avatar / login button */}
+          <div className="flex items-center gap-3">
+            {/* this div wrap shoping card & user profile */}
+            <div className="flex items-center space-x-3">
+              <button
+                type="button"
+                onClick={() => setshowCard(!showCard)}
+                className=" rounded-full relative mt-2 cursor-pointer bg-white p-1 text-gray-400 hover:text-gray-500"
+              >
+                <span className="sr-only r">View cart</span>
+                <FiShoppingCart className="h-6 w-6 text-main" />
+                <span className="absolute -top-1 right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-main rounded-full">
+                  3 {/* Replace with actual cart count */}
+                </span>
+              </button>
+              {/* user  */}
+              <button   onClick={() => setshowProfile(!showProfile)} className="border-2 cursor-pointer rounded-full p-1 border-main">
+                <FaUserTie className="text-main text-2xl" />
+              </button>
+            </div>
+            {/* button for login and register */}
+            <div className=" space-x-2 hidden">
+              <button className="button">
+                <Link href={"/sign-in"}>Sign-In</Link>
+              </button>
+              <button className="button">
+                <Link href={"/sign-up"}>Register</Link>
+              </button>
+            </div>
           </div>
         </div>
       </div>
+
+{/* -------------models----------------- */}
+
+      {/* dropdown card items */}
+      {showCard && (
+        <div className=" absolute bg-white shadow-md p-2  w-2xs right-5 top-20">card</div>
+      )}
+      {/* dropdown card items */}
+      {showProfile && (
+        <div className=" absolute bg-white shadow-md p-2  w-2xs right-5 top-20">profile</div>
+      )}
     </nav>
   );
 }

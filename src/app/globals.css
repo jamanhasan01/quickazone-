@@ -5,6 +5,19 @@
   --background: #ffffff;
   --text: #000000;
 }
+@theme {
+  --color-main:#f96635
+}
+@layer{
+  .wrapper{
+    @apply w-7xl mx-auto py-20
+  };
+  .button {
+    @apply bg-primary text-base font-semibold px-2 py-1 text-white rounded-md
+  }
+  
+};
+
 
 [data-theme="dark"] {
   --primary: #90cdf4;
@@ -17,10 +30,7 @@ body {
   color: var(--text);
 }
 
-/* custom classes */
-.bg-primary {
-  background-color: var(--primary)
-}
-.text-primary {
-  color: var(--primary)
+.swiper-button-prev, .swiper-button-next{
+  color:#f96635 !important;
+  font-size:12px !important;
 }
