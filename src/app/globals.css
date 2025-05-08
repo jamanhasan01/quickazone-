@@ -38,7 +38,7 @@
 }
 
 .h6 {
-  @apply  text-base md:text-lg;
+  @apply  text-base md:text-lg font-medium;
 }
   
 };
