@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const NewArribals = ({ product }) => {
+const SimpleProductCard = ({ product }) => {
   const { title, image, price } = product;
   
   return (
@@ -14,4 +14,4 @@ const NewArribals = ({ product }) => {
   );
 };
 
-export default NewArribals;
+export default SimpleProductCard;

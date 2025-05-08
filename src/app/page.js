@@ -1,6 +1,7 @@
 import AsideCategory from '@/components/AsideCategory'
 import Banner from '@/components/Banner'
-import ProductsCategory from '@/components/products/ProductsCategory'
+import NewProduct from '@/components/NewProduct'
+import ProductsCategory from '@/components/ProductsCategory'
 
 export default function Home() {
   return (
@@ -12,9 +13,11 @@ export default function Home() {
           <AsideCategory />
         </div>
         <div className='col-span-8 '>
-          <ProductsCategory/>
+          <ProductsCategory />
+          <NewProduct></NewProduct>
         </div>
       </div>
+
     </>
   )
 }
