@@ -14,22 +14,22 @@ const ProductsCategory = () => {
 
 
   return (
-    <div className='grid grid-cols-3'>
+    <div className='grid grid-cols-3 p-5 shadow'>
       <div className=' space-y-2 space-x-2'>
-        <h3 className='text-lg font-semibold'>NewArribals</h3>
+        <h3 className='h4'>New Arribals</h3>
         {products.slice(0, 10).map((product) => (
           <NewArribals key={product.id} product={product}></NewArribals>
         ))}
       </div>
       <div  className=' space-y-2 space-x-2'>
-      <h3 className='text-lg font-semibold'>Trending</h3>
+      <h3 className='h4'>Trending</h3>
         {products.slice(11, 20).map((product) => (
           <Trending key={product.id} product={product}></Trending>
         ))}
     
       </div>
       <div  className=' space-y-2 space-x-2'>
-      <h3 className='text-lg font-semibold'>TopRated</h3>
+      <h3 className='h4'>TopRated</h3>
         {products.slice(0, 10).map((product) => (
               <TopRated product={product}></TopRated>
         ))}

@@ -13,7 +13,7 @@ export default function Navbar() {
       <div className="w-7xl mx-auto">
         <div className="flex justify-between h-16">
           {/* Left side - Logo */}
-          <div className="flex items-center">
+          <div className="flex  items-center">
             <Link href="/" className="text-2xl font-semibold text-main ">
               Quickazone
             </Link>

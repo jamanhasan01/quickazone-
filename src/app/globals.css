@@ -15,6 +15,31 @@
   .button {
     @apply bg-primary text-base font-semibold px-2 py-1 text-white rounded-md
   }
+
+/* Individual  levels */
+.h1 {
+  @apply  text-5xl md:text-6xl leading-tight;
+}
+
+.h2 {
+  @apply  text-4xl md:text-5xl leading-snug;
+}
+
+.h3 {
+  @apply  text-3xl md:text-4xl leading-normal;
+}
+
+.h4 {
+  @apply  text-2xl md:text-3xl font-medium;
+}
+
+.h5 {
+  @apply  text-lg md:text-xl font-medium;
+}
+
+.h6 {
+  @apply  text-base md:text-lg;
+}
   
 };
 
@@ -34,3 +59,5 @@ body {
   color:#f96635 !important;
   font-size:12px !important;
 }
+
+
