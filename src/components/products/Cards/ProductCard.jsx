@@ -1,25 +1,25 @@
 import Image from "next/image";
-
+import { FaRegHeart } from "react-icons/fa";
 const ProductCard = ({ product }) => {
   const { title, image, price, description, rating } = product;
   const roundedRating = Math.round(rating?.rate || 0);
 
   return (
-    <div className="p-2 bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
+    <div className="p-2 bg-base-100 shadow-xl hover:shadow-2xl transition-shadow rounded-md">
       {/* Product Image */}
-      <figure className="w-[150px] h-[150px]">
+      <figure className="w-[150px] mx-auto h-[150px]">
         <Image
           src={image}
           alt={title}
           width={200}
           height={200}
-          className="rounded-xl object-contain w-full h-full"
+          className="rounded-xl object-contain  w-full h-full p-2"
         />
       </figure>
 
       {/* Product Body */}
       <div className="mt-4 space-y-2">
-        <h6 className="text-sm font-bold">{title.slice(0,20)+"..."}</h6>
+        <h6 className="text-sm font-bold">{title.slice(0,38)+"..."}</h6>
   
         <div className="flex items-center gap-2">
           <div className="rating rating-sm">
@@ -39,9 +39,9 @@ const ProductCard = ({ product }) => {
 
         <div className="flex justify-between items-center w-full">
           <span className="text-lg font-bold ">${price}</span>
+          <FaRegHeart className="text-main"/>
         </div>
 
-          <button className="button !bg-main">Buy Now</button>
     
       </div>
     </div>

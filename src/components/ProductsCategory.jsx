@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import SimpleProductCard from '../app/products/Cards/SimpleProductCard'
+import SimpleProductCard from './products/Cards/SimpleProductCard'
 
 const ProductsCategory = () => {
   const [products, setproducts] = useState([])

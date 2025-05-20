@@ -1,9 +1,13 @@
+
 import AsideCategory from '@/components/AsideCategory'
 import Banner from '@/components/Banner'
 import NewProduct from '@/components/NewProduct'
 import ProductsCategory from '@/components/ProductsCategory'
+import SuperDeal from '@/components/DealOfTheDay'
 
-export default function Home() {
+
+export default async function  Home () {
+
   return (
     <>
       <Banner></Banner>
@@ -15,6 +19,7 @@ export default function Home() {
         <div className='col-span-8 '>
           <ProductsCategory />
           <NewProduct></NewProduct>
+          <SuperDeal></SuperDeal>
         </div>
       </div>
 
