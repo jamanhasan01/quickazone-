@@ -4,13 +4,18 @@ import { FiSearch, FiShoppingCart } from "react-icons/fi";
 import { FaUserTie } from "react-icons/fa6";
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [showCard, setshowCard] = useState(false);
   const [showProfile, setshowProfile] = useState(false);
+  let pathname=usePathname()
+if(!pathname.includes('sign-in') && !pathname.includes('sign-up')){
+  
+
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50 relative">
-      <div className="w-7xl mx-auto">
+    <nav className="bg-white shadow-sm fixed top-0 z-50  w-full">
+      <div className="wrapper !p-0">
         <div className="flex justify-between h-16">
           {/* Left side - Logo */}
           <div className="flex  items-center">
@@ -85,4 +90,5 @@ export default function Navbar() {
       )}
     </nav>
   );
+  }
 }
