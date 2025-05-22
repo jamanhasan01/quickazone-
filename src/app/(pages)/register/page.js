@@ -1,12 +1,12 @@
 'use client'
-
 import Link from 'next/link'
 import { useState } from 'react'
 
 const RegisterPage = () => {
   const [error, setError] = useState({})
   const [uploadImg, setuploadImg] = useState(null)
-  const submitHandler = (e) => {
+
+  const submitHandler = async (e) => {
     e.preventDefault()
 
     let newError = {}
@@ -17,6 +17,16 @@ const RegisterPage = () => {
     let password = form.get('password')
     let confirm_passowrd = form.get('confirm-password')
     let termsAccepted = form.get('terms') == 'on'
+    let file = form.get('file')
+
+    // image upload logic
+    const formData = new FormData()
+    formData.append('file', file)
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData,
+    })
+    let image = await res.json()
 
     // validation check
 
@@ -26,17 +36,36 @@ const RegisterPage = () => {
     if (!confirm_passowrd) newError.confirm_passowrd = 'confirm password is required'
     if (password.length < 8) newError.password = 'password must be at least 8 characters '
     if (password !== confirm_passowrd) newError.confirm_passowrd = 'passowrds do not match'
-    if (!termsAccepted) newError.termsAccepted = ''
-
+    if (!termsAccepted) newError.termsAccepted = 'You have to accept our terms and policies.'
+    if (!image || !uploadImg) newError.imageErr = 'i have to upload an image'
     if (Object.keys(newError).length > 0) {
       setError(newError)
       return
     }
 
-    let registaion_data = { fullname, email, password, confirm_passowrd }
-  }
+    // registration_Object
+    let registration = { fullname, email, password, confirm_passowrd, photoURL: image.url }
 
-  console.log(error)
+    try {
+      const response = await fetch('/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(registration),
+      })
+
+      const data = await response.json()
+      if (response.ok) {
+        alert('User registered successfully!')
+      } else {
+        alert(data.error || 'Registration failed')
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      alert('An error occurred. Please try again.')
+    }
+  }
 
   return (
     <section className='min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-100 p-4'>
@@ -145,30 +174,40 @@ const RegisterPage = () => {
               </label>
               <input
                 type='file'
+                name='file'
                 id='fileInput'
                 className='absolute left-0 top-0 w-full h-full opacity-0 cursor-pointer'
                 onChange={(e) => setuploadImg(e.target.files[0].name)}
               />
-              <p>{uploadImg ? uploadImg : "No file selected"}</p>
+              <p>
+                {uploadImg ? (
+                  uploadImg
+                ) : (
+                  <span className='text-sm text-red-600'>{error.imageErr}</span>
+                )}
+              </p>
             </div>
             {/* Terms and Conditions */}
-            <div className='flex items-center my-3'>
-              <input
-                id='terms'
-                name='terms'
-                type='checkbox'
-                className={'h-4 w-4 text-blue-600 focus:ring-blue-500 border-white/30 rounded'}
-              />
-              <label htmlFor='terms' className='ml-2 block text-sm text-gray-700'>
-                I agree to the{' '}
-                <Link href='/trams' className='text-main hover:underline'>
-                  Terms
-                </Link>{' '}
-                and{' '}
-                <Link href='policy' className='text-main hover:underline'>
-                  Privacy Policy
-                </Link>
-              </label>
+            <div className='my-4'>
+              <div className='flex items-center'>
+                <input
+                  id='terms'
+                  name='terms'
+                  type='checkbox'
+                  className={'h-4 w-4 text-blue-600 focus:ring-blue-500 border-white/30 rounded'}
+                />
+                <label htmlFor='terms' className='ml-2 block text-sm text-gray-700'>
+                  I agree to the{' '}
+                  <Link href='/trams' className='text-main hover:underline'>
+                    Terms
+                  </Link>{' '}
+                  and{' '}
+                  <Link href='policy' className='text-main hover:underline'>
+                    Privacy Policy
+                  </Link>
+                </label>
+              </div>
+              <p className='text-xs text-red-500 mt-1'>{error.termsAccepted}</p>
             </div>
 
             {/* Sign Up Button */}

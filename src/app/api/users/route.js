@@ -5,13 +5,17 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function POST(request) {
   await dbConnect()
   try {
-    const { username, email, password, role } = await request.json()
+    let {fullname,email,password,photoURL}=await request.json()
+   
+  
     const existingUser = await User.findOne({ email })
     if (existingUser) {
       return NextResponse.json({ error: 'User already exists' }, { status: 400 })
     }
 
-    const newUser = new User({ username, email, passwordHash: password, role })
+    const newUser = new User({ fullname, email, passwordHash: password,photoURL})
+    console.log(newUser);
+    
     await newUser.save()
 
     return NextResponse.json(

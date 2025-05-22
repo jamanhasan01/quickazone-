@@ -1,5 +1,6 @@
 'use client'
 
+import ImageUploader from '@/components/ImageUploader'
 import Link from 'next/link'
 
 const LoginPage = () => {
@@ -130,6 +131,7 @@ const LoginPage = () => {
               </Link>
             </p>
           </div>
+          <ImageUploader></ImageUploader>
         </div>
       </div>
     </section>
