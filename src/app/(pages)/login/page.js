@@ -88,7 +88,7 @@ const LoginPage = () => {
             </button>
           </form>
           {/* Social Login Divider */}
-          <div className='relative my-4'>
+          <div className='relative my-2'>
             <div className='absolute inset-0 flex items-center'>
               <div className='w-full border-t border-white/30'></div>
             </div>
@@ -123,7 +123,7 @@ const LoginPage = () => {
           </div>
 
           {/* Sign Up Link */}
-          <div className='mt-6 text-center'>
+          <div className='mt-2 text-center'>
             <p className='text-sm text-gray-600'>
               Don't have an account?{' '}
               <Link href={'/register'} className='font-medium text-main hover:underline'>
@@ -131,7 +131,6 @@ const LoginPage = () => {
               </Link>
             </p>
           </div>
-          <ImageUploader></ImageUploader>
         </div>
       </div>
     </section>

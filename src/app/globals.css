@@ -6,7 +6,7 @@
   --text: #000000;
 }
 @theme {
-  --color-main:#f96635
+  --color-main:#2b7fff
 }
 @layer{
   .wrapper{

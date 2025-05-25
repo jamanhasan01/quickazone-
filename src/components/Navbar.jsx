@@ -69,10 +69,10 @@ export default function Navbar() {
               {/* button for login and register */}
               <div className=''>
                 <button className='button !bg-transparent !text-main'>
-                  <Link href={'/register'}>Sign-In</Link>
+                  <Link href={'/login'}>Sign-In</Link>
                 </button>
                 <button className='button !bg-transparent !text-main'>
-                  <Link href={'/login'}>Register</Link>
+                  <Link href={'/register'}>Register</Link>
                 </button>
               </div>
             </div>
