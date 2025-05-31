@@ -1,13 +1,36 @@
 'use client'
-
-import ImageUploader from '@/components/ImageUploader'
 import Link from 'next/link'
+import { signIn } from 'next-auth/react' // Import the signIn function
+import { useRouter } from 'next/navigation' // For App Router navigation
 
 const LoginPage = () => {
-  let handleSubmit = (e) => {
+  const router = useRouter() // Initialize useRouter hook
+
+  let handleSubmit = async (e) => {
     e.preventDefault()
     let form = new FormData(e.target)
-    let data = form.get()
+    let email = form.get('email')
+    let password = form.get('password')
+
+    // Use NextAuth.js's signIn function
+    // 'credentials' matches the name of your CredentialsProvider
+    const result = await signIn('credentials', {
+      redirect: false, // Prevents NextAuth.js from automatically redirecting
+      email, // Pass the email from the form
+      password, // Pass the password from the form
+    })
+
+    if (result.error) {
+      // Handle login error (e.g., display a message to the user)
+      console.error("Login failed:", result.error)
+      // You can replace this alert with a more user-friendly error display (e.g., a state variable that shows an error message below the form)
+      alert("Login failed: " + result.error);
+    } else {
+      // Login successful
+      console.log("Login successful!")
+      // Redirect the user to a protected page, e.g., the dashboard
+      router.push('/') // Or any other authenticated route
+    }
   }
 
   return (
@@ -26,7 +49,7 @@ const LoginPage = () => {
             <p className='text-gray-600 mt-2'>Sign in to your account</p>
           </div>
 
-          {/* form feild start from here  */}
+          {/* form field start from here */}
           <form onSubmit={handleSubmit}>
             {/* Email Field */}
             <div className='mb-3'>
@@ -40,6 +63,7 @@ const LoginPage = () => {
                 autoComplete='email'
                 className='w-full px-4 py-3 bg-white/50 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-transparent placeholder-gray-500'
                 placeholder='your@email.com'
+                required // Added for basic HTML validation
               />
             </div>
 
@@ -55,6 +79,7 @@ const LoginPage = () => {
                 autoComplete='current-password'
                 className='w-full px-4 py-3 bg-white/50 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-transparent placeholder-gray-500'
                 placeholder='••••••••'
+                required // Added for basic HTML validation
               />
             </div>
 
@@ -87,6 +112,7 @@ const LoginPage = () => {
               Login
             </button>
           </form>
+
           {/* Social Login Divider */}
           <div className='relative my-2'>
             <div className='absolute inset-0 flex items-center'>
@@ -107,7 +133,7 @@ const LoginPage = () => {
               <svg className='w-5 h-5' fill='currentColor' viewBox='0 0 24 24'>
                 <path d='M12.545 10.239v3.821h5.445c-0.712 2.315-2.647 3.972-5.445 3.972-3.332 0-6.033-2.701-6.033-6.032s2.701-6.032 6.033-6.032c1.498 0 2.866 0.549 3.921 1.453l2.814-2.814c-1.784-1.664-4.13-2.676-6.735-2.676-5.523 0-10 4.477-10 10s4.477 10 10 10c8.396 0 10-7.496 10-10 0-0.67-0.069-1.325-0.189-1.955h-9.811z' />
               </svg>
-              <span className='ml-1 text-sm font-semibold text-gray-600'>Goolge</span>
+              <span className='ml-1 text-sm font-semibold text-gray-600'>Google</span>
             </button>
 
             {/* Facebook */}

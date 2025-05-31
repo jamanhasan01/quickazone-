@@ -5,10 +5,15 @@ import { FaUserTie } from 'react-icons/fa6'
 import Link from 'next/link'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 export default function Navbar() {
   const [showCard, setshowCard] = useState(false)
   const [showProfile, setshowProfile] = useState(false)
+
+      const { data: session } = useSession()
+    console.log(session);
+
   let pathname = usePathname()
   if (!pathname.includes('register') && !pathname.includes('login')) {
     return (

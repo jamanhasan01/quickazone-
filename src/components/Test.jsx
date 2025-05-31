@@ -1,16 +1,33 @@
+// components/Header.js
 'use client'
-import React from 'react'
-import { useSwiper } from 'swiper/react'
 
-const Test = () => {
+import Link from 'next/link'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
- 
-  
+export default function Test() {
+  const { data: session, status } = useSession()
+console.log(session);
+
+  // The status is 'loading' while NextAuth is checking the session
+  if (status === 'loading') {
+    return <p>Loading...</p>
+  }
+
   return (
-    <div className='w-full h-screen'>
-
-    </div>
+    <header style={{ display: 'flex', justifyContent: 'space-between', padding: '1rem' }}>
+      <Link href="/">Home</Link>
+      <nav>
+        {status === 'authenticated' ? (
+          <>
+            <span style={{ marginRight: '1rem' }}>
+              Welcome, {session.user.name} ({session.user.email})
+            </span>
+            <button onClick={() => signOut()}>Sign Out</button>
+          </>
+        ) : (
+          <button onClick={() => signIn()}>Sign In</button>
+        )}
+      </nav>
+    </header>
   )
 }
-
-export default Test

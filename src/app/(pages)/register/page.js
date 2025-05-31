@@ -63,8 +63,6 @@ const RegisterPage = () => {
       })
 
       const uploadData = await uploadRes.json()
-      console.log('Upload API Response Data:', uploadData)
-
       if (!uploadRes.ok) {
         // Handle upload errors
         setErrors((prev) => ({ ...prev, photoURL: uploadData.message || 'Image upload failed.' }))
@@ -72,7 +70,7 @@ const RegisterPage = () => {
         return // Stop if image upload fails
       }
 
-      photoURL = uploadData.photoURL // Get the URL from the upload response
+      photoURL = uploadData.imageUrl // Get the URL from the upload response
     } catch (uploadError) {
       console.error('Image upload client-side/network error:', uploadError)
       setMessage('Failed to upload image. Please try again.')
