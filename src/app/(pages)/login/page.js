@@ -1,10 +1,10 @@
 'use client'
 import Link from 'next/link'
-import { signIn } from 'next-auth/react' // Import the signIn function
-import { useRouter } from 'next/navigation' // For App Router navigation
+import { signIn } from 'next-auth/react' 
+import { useRouter } from 'next/navigation' 
 
 const LoginPage = () => {
-  const router = useRouter() // Initialize useRouter hook
+  const router = useRouter()
 
   let handleSubmit = async (e) => {
     e.preventDefault()
@@ -12,24 +12,22 @@ const LoginPage = () => {
     let email = form.get('email')
     let password = form.get('password')
 
-    // Use NextAuth.js's signIn function
-    // 'credentials' matches the name of your CredentialsProvider
+
     const result = await signIn('credentials', {
-      redirect: false, // Prevents NextAuth.js from automatically redirecting
-      email, // Pass the email from the form
-      password, // Pass the password from the form
+      redirect: false, 
+      email,
+      password, 
     })
 
     if (result.error) {
-      // Handle login error (e.g., display a message to the user)
+      
       console.error("Login failed:", result.error)
-      // You can replace this alert with a more user-friendly error display (e.g., a state variable that shows an error message below the form)
       alert("Login failed: " + result.error);
     } else {
-      // Login successful
+      
       console.log("Login successful!")
-      // Redirect the user to a protected page, e.g., the dashboard
-      router.push('/') // Or any other authenticated route
+      
+      router.push('/') 
     }
   }
 
@@ -151,7 +149,7 @@ const LoginPage = () => {
           {/* Sign Up Link */}
           <div className='mt-2 text-center'>
             <p className='text-sm text-gray-600'>
-              Don't have an account?{' '}
+            <p>{"Don't have an account?"}</p>
               <Link href={'/register'} className='font-medium text-main hover:underline'>
                 Register
               </Link>

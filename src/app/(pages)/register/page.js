@@ -86,15 +86,20 @@ const RegisterPage = () => {
       termsAccepted,
       photoURL, // Include the Cloudinary URL here
     }
+    console.log(userData);
+    
 
     try {
-      const registerRes = await fetch('/api/register', {
+      const registerRes = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData), // Send user data as JSON
       })
 
+    
+
       const registerData = await registerRes.json()
+        console.log(registerData)
       console.log('Register API Response Data:', registerData)
 
       if (!registerRes.ok) {

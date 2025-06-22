@@ -6,9 +6,8 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 
 export default function Test() {
   const { data: session, status } = useSession()
-console.log(session);
 
-  // The status is 'loading' while NextAuth is checking the session
+
   if (status === 'loading') {
     return <p>Loading...</p>
   }

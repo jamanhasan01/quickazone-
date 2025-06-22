@@ -9,8 +9,8 @@ export const POST = async (request) => {
     await dbConnect()
 
     let { fullname, email, role, password, photoURL } = await request.json()
-    console.log(photoURL);
-    
+    console.log(fullname)
+
     let userExists = await User.findOne({ email })
 
     if (userExists) {
@@ -25,9 +25,6 @@ export const POST = async (request) => {
       photoURL,
     })
 
-    console.log(savedData);
-    
-
     await savedData.save()
 
     return NextResponse.json({ user: savedData }, { status: 201 })
@@ -35,8 +32,8 @@ export const POST = async (request) => {
     if (error.name == 'ValidationError') {
       let errors = {}
       for (const items in error.errors) {
-        console.log(errors[items]);
-        
+        console.log(errors[items])
+
         errors[items] = error.errors[items].message
       }
 

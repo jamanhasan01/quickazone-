@@ -24,7 +24,7 @@ export const authOptions = {
           })
 
           const data = await res.json()
-          console.log(data)
+         
 
           // Check if the backend response indicates success and contains the user object
           if (res.ok && data.status === 'success' && data.user) {
