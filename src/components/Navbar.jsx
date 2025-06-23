@@ -5,16 +5,23 @@ import { FaUserTie } from 'react-icons/fa6'
 import Link from 'next/link'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
+import { useCurrentUser } from '@/hooks/useCurrentUser'
+import GlobalLoader from './GlobalLoader'
+import Image from 'next/image'
 
 export default function Navbar() {
   const [showCard, setshowCard] = useState(false)
   const [showProfile, setshowProfile] = useState(false)
-
-      const { data: session } = useSession()
-    console.log(session);
-
   let pathname = usePathname()
+
+  const { user, isLoading, authStatus } = useCurrentUser()
+  console.log(isLoading)
+
+  if (isLoading == true) {
+    return <GlobalLoader></GlobalLoader>
+  }
+
   if (!pathname.includes('register') && !pathname.includes('login')) {
     return (
       <nav className='bg-white shadow-sm fixed top-0 z-50  w-full'>
@@ -50,36 +57,41 @@ export default function Navbar() {
 
             {/* Right side - Shopping cart and avatar / login button */}
             <div className='flex items-center gap-3'>
-              {/* this div wrap shoping card & user profile */}
-              <div className='flex items-center space-x-3 hidden'>
-                <button
-                  type='button'
-                  onClick={() => setshowCard(!showCard)}
-                  className=' rounded-full relative mt-2 cursor-pointer bg-white p-1 text-gray-400 hover:text-gray-500'
-                >
-                  <span className='sr-only r'>View cart</span>
-                  <FiShoppingCart className='h-6 w-6 text-main' />
-                  <span className='absolute -top-1 right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-main rounded-full'>
-                    3 {/* Replace with actual cart count */}
-                  </span>
-                </button>
-                {/* user  */}
-                <button
-                  onClick={() => setshowProfile(!showProfile)}
-                  className='border-2 cursor-pointer rounded-full p-1 border-main'
-                >
-                  <FaUserTie className='text-main text-2xl' />
-                </button>
-              </div>
-              {/* button for login and register */}
-              <div className=''>
-                <button className='button !bg-transparent !text-main'>
-                  <Link href={'/login'}>Sign-In</Link>
-                </button>
-                <button className='button !bg-transparent !text-main'>
-                  <Link href={'/register'}>Register</Link>
-                </button>
-              </div>
+              {user ? (
+                <div className='flex items-center space-x-3 '>
+                  <button
+                    type='button'
+                    onClick={() => setshowCard(!showCard)}
+                    className=' rounded-full relative mt-2 cursor-pointer bg-white p-1 text-gray-400 hover:text-gray-500'
+                  >
+                    <span className='sr-only r'>View cart</span>
+                    <FiShoppingCart className='h-6 w-6 text-main' />
+                    <span className='absolute -top-1 right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-main rounded-full'>
+                      3 {/* Replace with actual cart count */}
+                    </span>
+                  </button>
+                  {/* user  */}
+                  <button
+                    onClick={() => setshowProfile(!showProfile)}
+                    className=''
+                  >
+                    {user?.photoURL ? (
+                      <Image className='border-2 cursor-pointer rounded-full p-1 border-main w-12 h-12' src={user?.photoURL} width={300} height={300} />
+                    ) : (
+                      <FaUserTie className='text-main text-2xl border-2 cursor-pointer rounded-full p-1 border-main w-12 h-12' />
+                    )}
+                  </button>
+                </div>
+              ) : (
+                <div className=''>
+                  <button className='button !bg-transparent !text-main'>
+                    <Link href={'/login'}>Sign-In</Link>
+                  </button>
+                  <button className='button !bg-transparent !text-main'>
+                    <Link href={'/register'}>Register</Link>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -92,7 +104,9 @@ export default function Navbar() {
         )}
         {/* dropdown card items */}
         {showProfile && (
-          <div className=' absolute bg-white shadow-md p-2  w-2xs right-5 top-20'>profile</div>
+          <div className=' absolute bg-white shadow-md p-2  w-2xs right-5 top-20'>
+            <button onClick={signOut}>Logout</button>
+          </div>
         )}
       </nav>
     )

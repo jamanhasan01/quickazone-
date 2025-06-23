@@ -8,6 +8,19 @@ const nextConfig = {
         port: '',
         pathname: '/img/**',
       },
+            {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com', // For Google
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com', // For GitHub
+      },
+      // ▼ ADD THIS NEW OBJECT FOR CLOUDINARY ▼
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
     ],
   },
   async headers() {
