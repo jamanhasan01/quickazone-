@@ -1,54 +1,35 @@
 "use client"
-import { useState } from "react"
-
-const CategoryItem = ({ name, subcategories }) => {
-  const [isExpanded, setIsExpanded] = useState(false)
-
-  return (
-    <li className="flex flex-col">
-      <div className="flex justify-between items-center cursor-pointer">
-        <h3 className="h6 text-semibold">{name}</h3>
-        <button 
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="text-xl cursor-pointer p-1 rounded hover:bg-gray-100"
-        >
-          {isExpanded ? '−' : '+'}
-        </button>
-      </div>
-      
-      {isExpanded && (
-        <ul className="pl-5 my-3 text-base text-gray-600 space-y-2 ">
-          {subcategories.map((sub, i) => (
-            <li key={i} className="hover:text-black cursor-pointer border-b border-gray-100 pb-2">
-              {sub}
-            </li>
-          ))}
-        </ul>
-      )}
-    </li>
-  )
-}
 
 const AsideCategory = () => {
-  const categories = [
-    { name: '🧥 Clothing', subcategories: ['T-Shirts', 'Jeans', 'Dresses', 'Jackets'] },
-    { name: '👜 Bags', subcategories: ['Backpacks', 'Handbags', 'Wallets', 'Luggage'] },
-    { name: '👓 Glasses', subcategories: ['Sunglasses', 'Eyeglasses', 'Reading Glasses'] },
-    { name: '📱 Gadgets', subcategories: ['Smartphones', 'Tablets', 'Smartwatches', 'Headphones'] },
-    { name: '⌚ Watches', subcategories: ['Digital', 'Analog', 'Smart', 'Luxury'] },
-    { name: '👟 Shoes', subcategories: ['Sneakers', 'Boots', 'Sandals', 'Formal'] },
-    { name: '💄 Beauty', subcategories: ['Skincare', 'Makeup', 'Fragrances', 'Haircare'] },
-    { name: '🏠 Home', subcategories: ['Furniture', 'Decor', 'Kitchen', 'Bedding'] },
-    { name: '🎮 Gaming', subcategories: ['Consoles', 'Games', 'Accessories', 'VR'] },
-    { name: '🏋️ Fitness', subcategories: ['Equipment', 'Clothing', 'Supplements', 'Yoga'] },
-  ]
+  // --- CHANGE 1: Updated the data to include an emoji for each category ---
+  const categoryOptions = [
+    { name: 'Electronics',       emoji: '💻' },
+    { name: 'Fashion & Apparel', emoji: '👕' },
+    { name: 'Home & Kitchen',    emoji: '🏠' },
+    { name: 'Health & Beauty',   emoji: '💄' },
+    { name: 'Books & Media',     emoji: '📚' },
+    { name: 'Sports & Outdoors', emoji: '⚽' },
+    { name: 'Toys & Games',      emoji: '🧸' },
+    { name: 'Automotive',        emoji: '🚗' },
+    { name: 'Groceries',         emoji: '🛒' },
+    { name: 'Pet Supplies',      emoji: '🐾' },
+  ];
 
   return (
-    <div className='p-5 flex flex-col drop-shadow-inherit shadow rounded-lg bg-white'>
-      <h3 className='h4 font-medium text-black/95  border-b border-gray-400 pb-2'>Categories</h3>
-      <ul className='flex flex-col gap-3 pt-4 text-lg font-normal'>
-        {categories.map((category, i) => (
-          <CategoryItem key={i} name={category.name} subcategories={category.subcategories} />
+    <div className='p-5 flex flex-col drop-shadow-lg shadow-md rounded-lg bg-white'>
+      <h3 className='text-xl font-medium text-black/95 border-b border-gray-300 pb-3'>
+        Categories
+      </h3>
+      <ul className='flex flex-col gap-1 pt-4 text-lg'>
+        {/* --- CHANGE 2: Updated the mapping to display the emoji and name --- */}
+        {categoryOptions.map((category) => (
+          <li
+            key={category.name} // The key is now category.name
+            className='flex items-center p-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-black cursor-pointer transition-colors duration-150'
+          >
+            <span className='mr-3 text-xl'>{category.emoji}</span>
+            <span>{category.name}</span>
+          </li>
         ))}
       </ul>
     </div>
