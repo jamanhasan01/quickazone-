@@ -1,19 +1,19 @@
-"use client"
+'use client'
 
 const AsideCategory = () => {
   // --- CHANGE 1: Updated the data to include an emoji for each category ---
   const categoryOptions = [
-    { name: 'Electronics',       emoji: '💻' },
+    { name: 'Electronics', emoji: '💻' },
     { name: 'Fashion & Apparel', emoji: '👕' },
-    { name: 'Home & Kitchen',    emoji: '🏠' },
-    { name: 'Health & Beauty',   emoji: '💄' },
-    { name: 'Books & Media',     emoji: '📚' },
+    { name: 'Home & Kitchen', emoji: '🏠' },
+    { name: 'Health & Beauty', emoji: '💄' },
+    { name: 'Books & Media', emoji: '📚' },
     { name: 'Sports & Outdoors', emoji: '⚽' },
-    { name: 'Toys & Games',      emoji: '🧸' },
-    { name: 'Automotive',        emoji: '🚗' },
-    { name: 'Groceries',         emoji: '🛒' },
-    { name: 'Pet Supplies',      emoji: '🐾' },
-  ];
+    { name: 'Toys & Games', emoji: '🧸' },
+    { name: 'Automotive', emoji: '🚗' },
+    { name: 'Groceries', emoji: '🛒' },
+    { name: 'Pet Supplies', emoji: '🐾' },
+  ]
 
   return (
     <div className='p-5 flex flex-col drop-shadow-lg shadow-md rounded-lg bg-white'>

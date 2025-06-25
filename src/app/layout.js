@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
             <header>
               <Navbar />
             </header>
-            <main className=''>{children}</main>
+            <main>{children}</main>
             <footer></footer>
           </AuthHandler>
         </NextAuthProvider>

@@ -1,22 +1,60 @@
-'use client'
-import ProductCard from '@/components/products/Cards/ProductCard'
-import { useEffect, useState } from 'react'
+import ProductCard from '@/components/products/Cards/ProductCard' // Assuming this path is correct
 
-const NewProduct = () => {
-  const [products, setproducts] = useState([])
+const NewProduct = async () => {
+  let products = []
 
-  useEffect(() => {
-    fetch('https://fakestoreapi.com/products')
-      .then((res) => res.json())
-      .then((json) => setproducts(json))
-  }, [])
+
+  try {
+    const res = await fetch('http://localhost:3000/api/products', )
+
+    if (!res.ok) {
+      console.error(`API fetch failed with status: ${res.status}`)
+
+      return (
+        <section className='my-20 p-5 text-center text-red-600'>
+          <h4 className='h4 mb-4'>New Products</h4>
+          <p>Failed to load new products. Please try again later.</p>
+        </section>
+      )
+    }
+
+    const result = await res.json()
+
+    if (result.success && Array.isArray(result.data)) {
+      products = result.data
+  
+    } else {
+      console.warn('API returned success: false or data is not an array:', result.message)
+    }
+  } catch (error) {
+    console.error('Error fetching new products:', error)
+
+    return (
+      <section className='my-20 p-5 text-center text-red-600'>
+        <h4 className='h4 mb-4'>New Products</h4>
+        <p>An error occurred while fetching products. Please try again later.</p>
+      </section>
+    )
+  }
+
+
+  if (products.length === 0) {
+    return (
+      <section className='my-20 p-5 text-center text-gray-600'>
+        <h4 className='h4 mb-4'>New Products</h4>
+        <p>No new products found at the moment.</p>
+      </section>
+    )
+  }
 
   return (
     <section className='my-20 shadow p-5'>
       <h4 className='h4 mb-4'>New Products</h4>
-      <div className='grid grid-cols-4 gap-5'>
-        {products.slice(0, 12).map((product, i) => (
-          <ProductCard key={i} product={product}></ProductCard>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5'>
+        {' '}
+        {/* Added responsive grid classes */}
+        {products.slice(0, 12).map((product) => (
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
     </section>

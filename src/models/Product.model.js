@@ -44,12 +44,11 @@ const productSchema = new Schema(
       required: [true, 'Please provide a product name.'],
       trim: true,
     },
-    images: [
-      {
-        type: String, // An array of image URLs
-        required: true,
-      },
-    ],
+    image: {
+      type: String,
+      required: true,
+    },
+
     brand: {
       type: String,
       required: [true, 'Please provide a brand name.'],

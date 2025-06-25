@@ -25,7 +25,7 @@ const LoginPage = () => {
       alert("Login failed: " + result.error);
     } else {
       
-      console.log("Login successful!")
+      alert("Login successful!")
       
       router.push('/') 
     }

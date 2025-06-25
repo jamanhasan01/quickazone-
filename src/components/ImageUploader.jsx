@@ -12,9 +12,7 @@ export default function ImageUploader({ setUrl, url, button_name }) {
       method: 'POST',
       body: formData,
     })
-    console.log(image)
 
-    console.log(formData)
 
     const data = await res.json()
     setUrl(data.url)

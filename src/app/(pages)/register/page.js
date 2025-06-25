@@ -23,7 +23,7 @@ const RegisterPage = () => {
     const password = form.get('password')
     const confirm_password = form.get('confirm-password')
     const termsAccepted = form.get('terms') === 'on'
-    const file = form.get('file') // Get the File object
+    const file = form.get('file')
 
     // Client-side validation: Password confirmation
     if (password !== confirm_password) {
@@ -86,7 +86,6 @@ const RegisterPage = () => {
       termsAccepted,
       photoURL, // Include the Cloudinary URL here
     }
-    console.log(userData)
 
     try {
       const registerRes = await fetch('/api/auth/register', {
@@ -96,8 +95,6 @@ const RegisterPage = () => {
       })
 
       const registerData = await registerRes.json()
-      console.log(registerData)
-      console.log('Register API Response Data:', registerData)
 
       if (!registerRes.ok) {
         if (registerData.errors) {

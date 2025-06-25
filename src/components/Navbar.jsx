@@ -1,9 +1,9 @@
-'use client' // Required for client-side interactivity
+'use client'
 
 import { FiSearch, FiShoppingCart } from 'react-icons/fi'
 import { FaUserTie } from 'react-icons/fa6'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
@@ -13,18 +13,36 @@ import Image from 'next/image'
 export default function Navbar() {
   const [showCard, setshowCard] = useState(false)
   const [showProfile, setshowProfile] = useState(false)
+  const [isScroll, setisScroll] = useState(false)
   let pathname = usePathname()
-
   const { user, isLoading, authStatus } = useCurrentUser()
-  console.log(isLoading)
+
+
+  // onscroll funtion handler
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setisScroll(true)
+      } else {
+        setisScroll(false)
+      }
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   if (isLoading == true) {
     return <GlobalLoader></GlobalLoader>
   }
+ 
 
   if (!pathname.includes('register') && !pathname.includes('login')) {
     return (
-      <nav className='bg-white shadow-sm fixed top-0 z-50  w-full'>
+      <nav className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+        isScroll ? 'bg-white/70 shadow-md backdrop-blur-md' : 'bg-transparent' // Use isScrolled for styling
+      }`}>
         <div className='wrapper !p-0'>
           <div className='flex justify-between h-16'>
             {/* Left side - Logo */}
@@ -71,12 +89,14 @@ export default function Navbar() {
                     </span>
                   </button>
                   {/* user  */}
-                  <button
-                    onClick={() => setshowProfile(!showProfile)}
-                    className=''
-                  >
+                  <button onClick={() => setshowProfile(!showProfile)} className=''>
                     {user?.photoURL ? (
-                      <Image className='border-2 cursor-pointer rounded-full p-1 border-main w-12 h-12' src={user?.photoURL} width={300} height={300} />
+                      <Image
+                        className='border-2 cursor-pointer rounded-full p-1 border-main w-12 h-12'
+                        src={user?.photoURL}
+                        width={300}
+                        height={300}
+                      />
                     ) : (
                       <FaUserTie className='text-main text-2xl border-2 cursor-pointer rounded-full p-1 border-main w-12 h-12' />
                     )}

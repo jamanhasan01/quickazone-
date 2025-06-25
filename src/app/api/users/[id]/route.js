@@ -10,7 +10,7 @@ export async function GET(request, { params }) {
     await dbConnect();
 
     // 2. NOW it is safe to get the user ID from the dynamic route parameter.
-    const { id } = params;
+    const { id } =await params;
 
     // 3. Find the user by their ID.
     const user = await User.findById(id);

@@ -9,7 +9,7 @@ export const POST = async (request) => {
     await dbConnect()
 
     let { fullname, email, role, password, photoURL } = await request.json()
-    console.log(fullname)
+
 
     let userExists = await User.findOne({ email })
 
