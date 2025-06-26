@@ -9,6 +9,7 @@ import { signOut, useSession } from 'next-auth/react'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 import GlobalLoader from './GlobalLoader'
 import Image from 'next/image'
+import Cart from './Cart'
 
 export default function Navbar() {
   const [showCard, setshowCard] = useState(false)
@@ -17,8 +18,6 @@ export default function Navbar() {
   let pathname = usePathname()
   const { user, isLoading, authStatus } = useCurrentUser()
 
-
-  // onscroll funtion handler
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -36,13 +35,18 @@ export default function Navbar() {
   if (isLoading == true) {
     return <GlobalLoader></GlobalLoader>
   }
- 
 
-  if (!pathname.includes('register') && !pathname.includes('login')) {
+  if (
+    !pathname.includes('register') &&
+    !pathname.includes('login') &&
+    !pathname.includes('dashboard')
+  ) {
     return (
-      <nav className={`fixed top-0 z-50 w-full transition-all duration-300 ${
-        isScroll ? 'bg-white/70 shadow-md backdrop-blur-md' : 'bg-transparent' // Use isScrolled for styling
-      }`}>
+      <nav
+        className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+          isScroll ? 'bg-white/70 shadow-md backdrop-blur-md' : 'bg-transparent' // Use isScrolled for styling
+        }`}
+      >
         <div className='wrapper !p-0'>
           <div className='flex justify-between h-16'>
             {/* Left side - Logo */}
@@ -94,6 +98,7 @@ export default function Navbar() {
                       <Image
                         className='border-2 cursor-pointer rounded-full p-1 border-main w-12 h-12'
                         src={user?.photoURL}
+                        alt='User Profile'
                         width={300}
                         height={300}
                       />
@@ -120,14 +125,48 @@ export default function Navbar() {
 
         {/* dropdown card items */}
         {showCard && (
-          <div className=' absolute bg-white shadow-md p-2  w-2xs right-5 top-20'>card</div>
-        )}
-        {/* dropdown card items */}
-        {showProfile && (
           <div className=' absolute bg-white shadow-md p-2  w-2xs right-5 top-20'>
-            <button onClick={signOut}>Logout</button>
+            <Cart></Cart>
           </div>
         )}
+
+        {/* -------------------- vvv THE CHANGE IS HERE vvv -------------------- */}
+        {/* dropdown profile items */}
+        {showProfile && (
+          <div className='absolute bg-white rounded-md shadow-lg w-48 right-5 top-20 '>
+            <ul className='py-1 divide-y divide-gray-200'>
+              {/* Profile Info Header */}
+              <li className='px-4 py-3'>
+                <p className='text-sm text-gray-900'>Signed in as</p>
+                <p className='text-sm font-medium text-gray-900 truncate'>
+                  {user?.email}
+                </p>
+              </li>
+
+              {/* Dashboard Link */}
+              <li>
+                <Link
+                  href='/dashboard'
+                  className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                >
+                  Dashboard
+                </Link>
+              </li>
+
+              {/* Logout Button */}
+              <li>
+                <button
+                  onClick={signOut}
+                  className='block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                >
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </div>
+        )}
+        {/* -------------------- ^^^ THE CHANGE IS HERE ^^^ -------------------- */}
+        
       </nav>
     )
   }

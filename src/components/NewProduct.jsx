@@ -3,9 +3,8 @@ import ProductCard from '@/components/products/Cards/ProductCard' // Assuming th
 const NewProduct = async () => {
   let products = []
 
-
   try {
-    const res = await fetch('http://localhost:3000/api/products', )
+    const res = await fetch('http://localhost:3000/api/products')
 
     if (!res.ok) {
       console.error(`API fetch failed with status: ${res.status}`)
@@ -22,7 +21,6 @@ const NewProduct = async () => {
 
     if (result.success && Array.isArray(result.data)) {
       products = result.data
-  
     } else {
       console.warn('API returned success: false or data is not an array:', result.message)
     }
@@ -37,7 +35,6 @@ const NewProduct = async () => {
     )
   }
 
-
   if (products.length === 0) {
     return (
       <section className='my-20 p-5 text-center text-gray-600'>
@@ -48,14 +45,16 @@ const NewProduct = async () => {
   }
 
   return (
-    <section className='my-20 shadow p-5'>
-      <h4 className='h4 mb-4'>New Products</h4>
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5'>
-        {' '}
-        {/* Added responsive grid classes */}
-        {products.slice(0, 12).map((product) => (
-          <ProductCard key={product._id} product={product} />
-        ))}
+    <section className=' '>
+      <div className='wrapper'>
+        <h4 className='h4 mb-4'>New Products</h4>
+        <div className='grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5'>
+          {' '}
+          {/* Added responsive grid classes */}
+          {products.slice(0, 12).map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))}
+        </div>
       </div>
     </section>
   )

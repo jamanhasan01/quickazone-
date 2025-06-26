@@ -66,9 +66,6 @@ export default function AddProductPage() {
       return
     }
 
-  
-    
-
     // --- STEP 3: Prepare and send the final product data ---
     const product_data = {
       product_name: formData.get('product_name'),
@@ -81,36 +78,36 @@ export default function AddProductPage() {
     }
 
     try {
-      const productRes = await fetch('/api/products', { // Assumes a '/api/products' endpoint
+      const productRes = await fetch('/api/products', {
+        // Assumes a '/api/products' endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(product_data),
       })
-      
+
       const newProduct = await productRes.json()
 
       if (!productRes.ok) {
         // Handle potential validation errors from the server
         if (productRes.status === 400) {
-            setErrors(newProduct.errors || {})
+          setErrors(newProduct.errors || {})
         }
         setMessage(newProduct.message || 'Failed to create product.')
         setIsLoading(false)
         return
       }
-      
+
       // --- STEP 4: Handle success ---
       setMessage('Product created successfully!')
       // Redirect to the new product's page or a general products page
       router.push(`/products/${newProduct.id}`) // Assuming the response contains the new product's ID
-
     } catch (error) {
-        console.error('Product creation error:', error)
-        setMessage('An unexpected error occurred. Please try again.')
+      console.error('Product creation error:', error)
+      setMessage('An unexpected error occurred. Please try again.')
     } finally {
-        setIsLoading(false)
+      setIsLoading(false)
     }
   }
 
@@ -128,7 +125,9 @@ export default function AddProductPage() {
             Product Name
           </label>
           <input type='text' name='product_name' id='product_name' className='input' required />
-          {errors.product_name && <p className="text-red-500 text-xs mt-1">{errors.product_name}</p>}
+          {errors.product_name && (
+            <p className='text-red-500 text-xs mt-1'>{errors.product_name}</p>
+          )}
         </div>
 
         {/* Price & Stock */}
@@ -142,17 +141,21 @@ export default function AddProductPage() {
               name='product_price'
               id='product_price'
               required
-              step="0.01"
+              step='0.01'
               className='input'
             />
-            {errors.product_price && <p className="text-red-500 text-xs mt-1">{errors.product_price}</p>}
+            {errors.product_price && (
+              <p className='text-red-500 text-xs mt-1'>{errors.product_price}</p>
+            )}
           </div>
           <div>
             <label htmlFor='countInStock' className='block text-sm font-medium text-gray-700'>
               Count In Stock
             </label>
             <input type='number' name='countInStock' id='countInStock' required className='input' />
-            {errors.countInStock && <p className="text-red-500 text-xs mt-1">{errors.countInStock}</p>}
+            {errors.countInStock && (
+              <p className='text-red-500 text-xs mt-1'>{errors.countInStock}</p>
+            )}
           </div>
         </div>
 
@@ -163,7 +166,7 @@ export default function AddProductPage() {
               Brand
             </label>
             <input type='text' name='brand' id='brand' className='input' required />
-            {errors.brand && <p className="text-red-500 text-xs mt-1">{errors.brand}</p>}
+            {errors.brand && <p className='text-red-500 text-xs mt-1'>{errors.brand}</p>}
           </div>
           <div>
             <label htmlFor='category' className='block text-sm font-medium text-gray-700'>
@@ -176,7 +179,7 @@ export default function AddProductPage() {
                 </option>
               ))}
             </select>
-            {errors.category && <p className="text-red-500 text-xs mt-1">{errors.category}</p>}
+            {errors.category && <p className='text-red-500 text-xs mt-1'>{errors.category}</p>}
           </div>
         </div>
 
@@ -185,8 +188,14 @@ export default function AddProductPage() {
           <label htmlFor='description' className='block text-sm font-medium text-gray-700'>
             Description
           </label>
-          <textarea name='description' id='description' required className='input' rows='4'></textarea>
-          {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description}</p>}
+          <textarea
+            name='description'
+            id='description'
+            required
+            className='input'
+            rows='4'
+          ></textarea>
+          {errors.description && <p className='text-red-500 text-xs mt-1'>{errors.description}</p>}
         </div>
 
         {/* Image */}
@@ -194,12 +203,16 @@ export default function AddProductPage() {
           <label htmlFor='file' className='block text-sm font-medium text-gray-700'>
             Product Image
           </label>
-          <input type='file' name='file' id='file' required className='input' accept="image/*" />
-          {errors.file && <p className="text-red-500 text-xs mt-1">{errors.file}</p>}
+          <input type='file' name='file' id='file' required className='file-input' accept='image/*' />
+          {errors.file && <p className='text-red-500 text-xs mt-1'>{errors.file}</p>}
         </div>
 
         {/* Global Message Display */}
-        {message && <p className={`text-sm ${errors.length > 0 ? 'text-red-500' : 'text-green-600'}`}>{message}</p>}
+        {message && (
+          <p className={`text-sm ${errors.length > 0 ? 'text-red-500' : 'text-green-600'}`}>
+            {message}
+          </p>
+        )}
 
         <div>
           <button
