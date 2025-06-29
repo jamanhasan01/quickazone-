@@ -1,7 +1,4 @@
-import NextAuth from 'next-auth'
-import { authOptions } from '@/lib/auth/auth'
+// /src/app/api/auth/[...nextauth]/route.js
 
-const handler = NextAuth(authOptions)
-
-export const GET = handler
-export const POST = handler
+import { handlers } from "@/lib/auth/auth"; // <-- Import handlers
+export const { GET, POST } = handlers; // <-- Export them

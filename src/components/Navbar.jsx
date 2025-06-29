@@ -10,14 +10,18 @@ import { useCurrentUser } from '@/hooks/useCurrentUser'
 import GlobalLoader from './GlobalLoader'
 import Image from 'next/image'
 import Cart from './Cart'
+import getCartData from '@/hooks/getCartData'
+import NavCart from './NavCart'
 
-export default function Navbar() {
+export default  function Navbar() {
   const [showCard, setshowCard] = useState(false)
   const [showProfile, setshowProfile] = useState(false)
   const [isScroll, setisScroll] = useState(false)
   let pathname = usePathname()
   const { user, isLoading, authStatus } = useCurrentUser()
 
+
+  // onscroll every trigger funtion for nav
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -81,17 +85,7 @@ export default function Navbar() {
             <div className='flex items-center gap-3'>
               {user ? (
                 <div className='flex items-center space-x-3 '>
-                  <button
-                    type='button'
-                    onClick={() => setshowCard(!showCard)}
-                    className=' rounded-full relative mt-2 cursor-pointer bg-white p-1 text-gray-400 hover:text-gray-500'
-                  >
-                    <span className='sr-only r'>View cart</span>
-                    <FiShoppingCart className='h-6 w-6 text-main' />
-                    <span className='absolute -top-1 right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-main rounded-full'>
-                      3 {/* Replace with actual cart count */}
-                    </span>
-                  </button>
+               <NavCart showCard={showCard} setshowCard={setshowCard}></NavCart>
                   {/* user  */}
                   <button onClick={() => setshowProfile(!showProfile)} className=''>
                     {user?.photoURL ? (
@@ -138,16 +132,14 @@ export default function Navbar() {
               {/* Profile Info Header */}
               <li className='px-4 py-3'>
                 <p className='text-sm text-gray-900'>Signed in as</p>
-                <p className='text-sm font-medium text-gray-900 truncate'>
-                  {user?.email}
-                </p>
+                <p className='text-sm font-medium text-gray-900 truncate'>{user?.email}</p>
               </li>
 
               {/* Dashboard Link */}
               <li>
                 <Link
                   href='/dashboard'
-                  className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                  className='block px-4 py-2 texWWWWWt-sm text-gray-700 hover:bg-gray-100'
                 >
                   Dashboard
                 </Link>
@@ -166,7 +158,6 @@ export default function Navbar() {
           </div>
         )}
         {/* -------------------- ^^^ THE CHANGE IS HERE ^^^ -------------------- */}
-        
       </nav>
     )
   }

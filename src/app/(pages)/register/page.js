@@ -56,7 +56,7 @@ const RegisterPage = () => {
       const uploadFormData = new FormData()
       uploadFormData.append('file', file) // Append only the file to a new FormData object
 
-      const uploadRes = await fetch('/api/upload', {
+      const uploadRes = await fetch('api/upload', {
         method: 'POST',
         // DO NOT set 'Content-Type' here; browser will set multipart/form-data
         body: uploadFormData, // Send the FormData with the file

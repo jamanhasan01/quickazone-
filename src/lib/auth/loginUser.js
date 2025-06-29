@@ -6,7 +6,7 @@ import dbConnect from '../db'
 
 export async function loginUser(email, password) {
   try {
-    await dbConnect()// if needed
+    await dbConnect()
 
     const user = await User.findOne({ email })
     if (!user) {
@@ -29,7 +29,7 @@ export async function loginUser(email, password) {
       },
     }
   } catch (error) {
-    console.error('loginUser error:', error)
+
     return { status: 'error', message: 'Something went wrong' }
   }
 }

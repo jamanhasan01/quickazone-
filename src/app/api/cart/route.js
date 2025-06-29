@@ -1,17 +1,21 @@
-import { authOptions } from '@/lib/auth/auth'
+// /src/app/api/cart/route.js
+
+import { auth } from '@/lib/auth/auth' // <-- Import the new 'auth' function
 import dbConnect from '@/lib/db'
 import Cart from '@/models/Cart.model'
-import { getServerSession } from 'next-auth'
 import { NextResponse } from 'next/server'
 
 export async function POST(request) {
   try {
+    const session = await auth() // <-- 1. Get the session by calling auth()
+
+    if (!session?.user?.id) { // <-- 2. Check for session and user.id
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
+    }
+
+    const userId = session.user.id // <-- 3. Get the userId
     const product_data = await request.json()
     const { productId, quantity } = product_data
-    const { user } = await getServerSession(authOptions)
-
-    const userId = user?.id
-    console.log('session print from card rout ', userId)
 
     if (!productId || !quantity) {
       return NextResponse.json({ message: 'Missing product data' }, { status: 400 })
@@ -49,14 +53,25 @@ export async function POST(request) {
 
 export async function GET() {
   try {
-    const { user } = await getServerSession(authOptions)
-    const userId = user.id
-    await dbConnect()
-    let products = await Cart.findOne({ userId: userId }).populate('items.productId')
-    console.log('log form cart route in get req ', products.items)
+    const session = await auth() // <-- Same change here
 
-    return NextResponse.json({ products })
+    if (!session?.user?.id) {
+        return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
+    }
+
+    const userId = session.user.id
+    await dbConnect()
+
+    // Ensure products is not null before accessing .items
+    const cart = await Cart.findOne({ userId: userId }).populate('items.productId')
+    
+    if (!cart) {
+        return NextResponse.json({ products: [] }, { status: 200 }); // Return empty array if no cart
+    }
+
+    return NextResponse.json({ products: cart.items })
   } catch (error) {
-    return NextResponse.json({ message: 'An Iternal server error' }, { status: 500 })
+    console.error('[CART_GET_ERROR]', error)
+    return NextResponse.json({ message: 'An internal server error occurred' }, { status: 500 })
   }
 }
